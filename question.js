@@ -31,7 +31,7 @@ function displayMountainInfo(data) {
         container.appendChild(span);
 
         // 波括弧で囲まれた部分の直後にボタンを表示
-        const button = createElement("button", mountainName);
+        const button = createElement("button", "????????");
         // ボタンにクリックイベントを追加
         button.addEventListener("click", () => {
           // span要素を表示し、ボタンを非表示にする
