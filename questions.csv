@@ -6,7 +6,8 @@ RSTPではルートを切り替える際、スイッチ間で{プロポーザル
 Cisco AnyConnectとASA（{Adaptive Security Appliance}）のVPN接続では{SSL/TLS} VPNを使用する。ASAは{ファイアウォール}製品のひとつである。
 DMVPN（{Dynamic Multipoint VPN}）ではスポーク間の通信を行う場合、スポークはハブから相手の{IPアドレス}を取得し、直接VPNトンネルを確立する。通信がハブを経由しないため、ハブの{負荷}が小さくなり、{遅延}も小さくなる。
 APのSE-Connectモードは{無線電波}の{干渉}などの状況を調べるモードである。
-APのMonitorモードは周囲の{無線通信}を{監視}するモードであり、Rogue Detectorモードは{不正}な{AP}や脅威を検出するためのモード。
+APのMonitorモードは{IDS}用の専用センサーや{RFIDタグ追跡}用の専用センサーとして動作するモードである。
+APのRogue Detectorモードは{不正}な{AP}や脅威を検出するためのモードである。
 APのFlexConnect（Hybrid REAP）モードはWLCとの接続が失われた場合に{Local}モードに切り替わるモード。{WAN}経由でWLCと接続する場合に使用する。
 APのSnifferモードは特定のチャネル上のパケットを{キャプチャ}し、任意のデバイスに{転送}するモード。
 スタティックルーティングを設定するには、「{ip route} 192.168.1.0 255.255.255.0 serial 1/1 20」などのように記述する。AD値を指定しない場合、AD値は{1}となる。同一の宛先に対して複数の経路を設定した場合、AD値が{小さ}い経路が優先的に使用される。
@@ -143,3 +144,12 @@ PoEポートのモードには、autoやstaticの他に、{PD}の{検出}を行�
 APの集中管理にはWLCによる管理と{クラウド}による管理があり、{Cisco Meraki}は後者に該当する。APにLANケーブルを差し込みインターネットに接続するだけで初期設定が完了する。
 IPv6の特殊なユニキャストアドレスに{IPv4射影アドレス}があり、IPv4ノードをIPv6アドレスで表すことができる。先頭{80}ビットが{0}、続く{16}ビットが{1}、末尾の{32}ビットが{IPv4アドレス}となっている。
 無線通信におけるアクセス制御の役割をAPとWLCで分割する方式を{スプリットMACアーキテクチャ}と呼ぶ。
+{EUI-64（Extended Unique Identifier 64-bit）}では{MACアドレス}を上位{24}ビットと下位{24}ビットに分割して間に0xfffeを挟み、先頭から{7}ビット目を反転させることでインターフェースIDを生成する。機器に固有の値をインターネット上のアドレスの一部とすることは危険が大きいとして非推奨となった。
+OSPFを有効化するには、(config)#{router ospf [プロセスID]}コマンドを実行する。OSPFを有効にするIFのネットワークをエリア0に所属させるには、(config-{router})#{network} 192.168.1.0 0.0.0.255 {area 0}コマンドを実行する。
+クラウドサービスに接続する方法にはインターネットVPNやプライベートWANの他、{Intercloud Exchange}を利用する方法がある。クラウド事業者と{Intercloud Exchange}、{Intercloud Exchange}とユーザ企業をそれぞれプライベートWANで接続することにより、クラウドサービスの移行を容易にすることができる。
+ICMPv6はICMPのエラー通知などの機能に加えて、同一セグメント上のデバイスのアドレスを調べる{ND（Neighbor Discovery）}の機能を持つ。
+{NDP（Neighbor Discovery Protocol）}では同一セグメント上のデバイスのMACアドレスを調べることができる。MACアドレスを問い合わせるパケットを{NS（Neighbor Solicitation）}、応答パケットを{NA（Neighbor Advertisement）}と呼ぶ。
+{NDP（Neighbor Discovery Protocol）}では同一セグメント上のデバイスのIPv6アドレスを調べることができる。セグメントのプレフィックス等を問い合わせるパケットを{RS（Neighbor Solicitation）}、応答パケットを{RA（Neighbor Advertisement）}と呼ぶ。これにより、｛SLAAC（Stateless Address Auto Configuration）}によるアドレスの自動設定が可能となる。
+EIGRPのプロトコルナンバーは{88}であり、OSPFのプロトコルナンバーは{89}である。
+STPタイマーのうち、Max Ageは{BPDU}の{受信}を待つ時間であり、この時間を過ぎるとSTPが再計算される。Forward Delayは{リスニング}状態と{ラーニング}状態の{待機}時間である。
+{LAP（Lightweight AP）}は電波の送受信のみを行い、接続機器の管理や設定の管理はWLCが行う。集中管理型APとも呼ばれる。
